@@ -1,48 +1,53 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional
 
 
+
+
 @dataclass
 class Location:
-    region: str
     country: str
-    province: str
-    city: str
-    latitude: Optional[float]
-    longitude: Optional[float]
+    region: Optional[str] = None
+    city: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+    def to_dict(self):
+        return {
+            'region': self.region,
+            'country': self.country,
+            'city': self.city,
+            'latitude': self.latitude,
+            'longitude': self.longitude
+        }
 
 
-@dataclass
-class Group:
-    id: int
-    name: str
-
-
-@dataclass
-class Attack:
-    id: int
-    name: str
-
-
-@dataclass
-class Target:
-    id: int
-    target: str
-    target_type: str
 
 
 @dataclass
 class TerrorEvent:
-    event_id: int
     date: datetime
-    summary: str
-    fatalities: int
-    injuries: int
-    casualties_number: int
-    attackers_number: int
     location: Location
-    attack_types: List[Attack] = field(default_factory=list)
-    target_types: List[Target] = field(default_factory=list)
-    group_types: List[Group] = field(default_factory=list)
+    attack_types: Optional[List[str]]
+    target_types: Optional[List[str]]
+    group_types: Optional[List[str]]
+    description: Optional[str] = None
+    fatalities: Optional[int] = None
+    injuries: Optional[int] = None
+    casualties: Optional[int] = None
+    num_of_attackers: Optional[int] = None
 
+    def to_dict(self):
+        return {
+            'date': self.date,
+            'description': self.description,
+            'fatalities': self.fatalities,
+            'injuries': self.injuries,
+            'casualties': self.casualties,
+            'num_of_attackers': self.num_of_attackers,
+            'location': self.location.to_dict(),
+            'attack_types': self.attack_types,
+            'target_types': self.target_types,
+            'group_types': self.group_types
+        }

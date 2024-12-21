@@ -1,10 +1,14 @@
-from app.db.mongo_database import event_collection
+from typing import List
+from pymongo import InsertOne
+from app.db.models.mongo_event import TerrorEvent
+from app.db.mongo_database import events_collection
 
 
-def insert_many_event(data):
+
+def insert_many_event(data: List[TerrorEvent]):
     try:
-        event_collection.insert_many(data)
-        return data
+        insert_data = [event.to_dict() for event in data]
+        events_collection.insert_many(insert_data)
+        print(f"Inserted {len(data)} events into MongoDB.")
     except Exception as e:
         print(f"An error occurred while inserting the data: {e}")
-        return None
