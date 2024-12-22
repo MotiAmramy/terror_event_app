@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4c210ff9be5feb1f4082fe046ea49a2b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4c210ff9be5feb1f4082fe046ea49a2b" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_4c210ff9be5feb1f4082fe046ea49a2b = L.map(
+                "map_4c210ff9be5feb1f4082fe046ea49a2b",
+                {
+                    center: [20.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7e4502af44b1ba19c6c82bbea6e054ee = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7e4502af44b1ba19c6c82bbea6e054ee.addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+            var marker_fc79aa7a1ca95eb90b179e6aad010bf3 = L.marker(
+                [31.320556, 65.961111],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_d4c388c76380203ccf6fea327a93a289 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_854956451d01714702931e4ce35cb7ae = $(`<div id="html_854956451d01714702931e4ce35cb7ae" style="width: 100.0%; height: 100.0%;">Place: South Asia<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 1<br>End Attack Count: 3430<br>Percentage Change: 342900.0%</div>`)[0];
+                popup_d4c388c76380203ccf6fea327a93a289.setContent(html_854956451d01714702931e4ce35cb7ae);
+            
+        
+
+        marker_fc79aa7a1ca95eb90b179e6aad010bf3.bindPopup(popup_d4c388c76380203ccf6fea327a93a289)
+        ;
+
+        
+    
+    
+            var marker_57fa2b32b6b8a97aba9615b1da08471b = L.marker(
+                [-23.759724, -56.494923],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_954cf61a25557e3757ff0fbad0e702dc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_805956578df5be9ea24804c45de8692e = $(`<div id="html_805956578df5be9ea24804c45de8692e" style="width: 100.0%; height: 100.0%;">Place: South America<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 65<br>End Attack Count: 172<br>Percentage Change: 164.6153846153846%</div>`)[0];
+                popup_954cf61a25557e3757ff0fbad0e702dc.setContent(html_805956578df5be9ea24804c45de8692e);
+            
+        
+
+        marker_57fa2b32b6b8a97aba9615b1da08471b.bindPopup(popup_954cf61a25557e3757ff0fbad0e702dc)
+        ;
+
+        
+    
+    
+            var marker_eab11fdc8b4edc4e3213cb1d7bd1d04e = L.marker(
+                [42.874722, 74.612222],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_f89bd37eb34c01fcb12edce11353e788 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bb34c6ec6ccfd6d04d234118fa8e6224 = $(`<div id="html_bb34c6ec6ccfd6d04d234118fa8e6224" style="width: 100.0%; height: 100.0%;">Place: Central Asia<br>Start Year: 1991<br>End Year: 2017<br>Start Attack Count: 7<br>End Attack Count: 7<br>Percentage Change: 0.0%</div>`)[0];
+                popup_f89bd37eb34c01fcb12edce11353e788.setContent(html_bb34c6ec6ccfd6d04d234118fa8e6224);
+            
+        
+
+        marker_eab11fdc8b4edc4e3213cb1d7bd1d04e.bindPopup(popup_f89bd37eb34c01fcb12edce11353e788)
+        ;
+
+        
+    
+    
+            var marker_bd1b99fd2a29981e0616deb45e906226 = L.marker(
+                [20.366728, 93.266651],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_1a31cc30288849d56a61ff9f523cfa5d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3e62601dbff1af6bd98dfb0c8a01b7b0 = $(`<div id="html_3e62601dbff1af6bd98dfb0c8a01b7b0" style="width: 100.0%; height: 100.0%;">Place: Southeast Asia<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 10<br>End Attack Count: 1020<br>Percentage Change: 10100.0%</div>`)[0];
+                popup_1a31cc30288849d56a61ff9f523cfa5d.setContent(html_3e62601dbff1af6bd98dfb0c8a01b7b0);
+            
+        
+
+        marker_bd1b99fd2a29981e0616deb45e906226.bindPopup(popup_1a31cc30288849d56a61ff9f523cfa5d)
+        ;
+
+        
+    
+    
+            var marker_8afcf67641dc0bc3852d348e17e88848 = L.marker(
+                [12.921007, 24.318324],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_dfc1a08aae7f6dfd57b3ee806a64fdf9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_db3a8e52f47d8815d3913ef136cb8f7e = $(`<div id="html_db3a8e52f47d8815d3913ef136cb8f7e" style="width: 100.0%; height: 100.0%;">Place: Sub-Saharan Africa<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 3<br>End Attack Count: 1970<br>Percentage Change: 65566.66666666666%</div>`)[0];
+                popup_dfc1a08aae7f6dfd57b3ee806a64fdf9.setContent(html_db3a8e52f47d8815d3913ef136cb8f7e);
+            
+        
+
+        marker_8afcf67641dc0bc3852d348e17e88848.bindPopup(popup_dfc1a08aae7f6dfd57b3ee806a64fdf9)
+        ;
+
+        
+    
+    
+            var marker_6a803e24b5fec7817263298da17cb5bd = L.marker(
+                [44.786568, 20.448922],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_5700c5d2302e7269745fc5dc647794e1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2226a2c808c42c322b89d80dc09c6e4c = $(`<div id="html_2226a2c808c42c322b89d80dc09c6e4c" style="width: 100.0%; height: 100.0%;">Place: Eastern Europe<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 12<br>End Attack Count: 110<br>Percentage Change: 816.6666666666666%</div>`)[0];
+                popup_5700c5d2302e7269745fc5dc647794e1.setContent(html_2226a2c808c42c322b89d80dc09c6e4c);
+            
+        
+
+        marker_6a803e24b5fec7817263298da17cb5bd.bindPopup(popup_5700c5d2302e7269745fc5dc647794e1)
+        ;
+
+        
+    
+    
+            var marker_c43d13e1e3283c2596c44296524c127b = L.marker(
+                [18.454394, -69.301685],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_68debfb3672e42a26e1c89b45a8dea3e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d0a92990b7c68a74f5ad3053944ce15a = $(`<div id="html_d0a92990b7c68a74f5ad3053944ce15a" style="width: 100.0%; height: 100.0%;">Place: Central America & Caribbean<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 7<br>End Attack Count: 4<br>Percentage Change: -42.857142857142854%</div>`)[0];
+                popup_68debfb3672e42a26e1c89b45a8dea3e.setContent(html_d0a92990b7c68a74f5ad3053944ce15a);
+            
+        
+
+        marker_c43d13e1e3283c2596c44296524c127b.bindPopup(popup_68debfb3672e42a26e1c89b45a8dea3e)
+        ;
+
+        
+    
+    
+            var marker_aadf523fa937dcd82d677803a8db6540 = L.marker(
+                [43.76956, 11.255814],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_eb54c99fbaa6a7d99ba402d96ab15637 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f382e08a3ea275416d0152d5b56e56dd = $(`<div id="html_f382e08a3ea275416d0152d5b56e56dd" style="width: 100.0%; height: 100.0%;">Place: Western Europe<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 50<br>End Attack Count: 291<br>Percentage Change: 482.0%</div>`)[0];
+                popup_eb54c99fbaa6a7d99ba402d96ab15637.setContent(html_f382e08a3ea275416d0152d5b56e56dd);
+            
+        
+
+        marker_aadf523fa937dcd82d677803a8db6540.bindPopup(popup_eb54c99fbaa6a7d99ba402d96ab15637)
+        ;
+
+        
+    
+    
+            var marker_d12f79c324fbce5193a0ff0cf49a9388 = L.marker(
+                [41.106178, 28.689863],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_9707f60728ac4e41da71fa6fa40f6b58 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4587a987a0b445001d158ae6bc03e1ad = $(`<div id="html_4587a987a0b445001d158ae6bc03e1ad" style="width: 100.0%; height: 100.0%;">Place: Middle East & North Africa<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 28<br>End Attack Count: 3780<br>Percentage Change: 13400.0%</div>`)[0];
+                popup_9707f60728ac4e41da71fa6fa40f6b58.setContent(html_4587a987a0b445001d158ae6bc03e1ad);
+            
+        
+
+        marker_d12f79c324fbce5193a0ff0cf49a9388.bindPopup(popup_9707f60728ac4e41da71fa6fa40f6b58)
+        ;
+
+        
+    
+    
+            var marker_9a9a7ef88fe292db1b6ff9c4b6be25a1 = L.marker(
+                [23.028956, 113.143441],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_84c47a913dc67ce507c70e84e50ff17d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9d8f7c4365065ba1c93c9e3cfd0383cd = $(`<div id="html_9d8f7c4365065ba1c93c9e3cfd0383cd" style="width: 100.0%; height: 100.0%;">Place: East Asia<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 2<br>End Attack Count: 7<br>Percentage Change: 250.0%</div>`)[0];
+                popup_84c47a913dc67ce507c70e84e50ff17d.setContent(html_9d8f7c4365065ba1c93c9e3cfd0383cd);
+            
+        
+
+        marker_9a9a7ef88fe292db1b6ff9c4b6be25a1.bindPopup(popup_84c47a913dc67ce507c70e84e50ff17d)
+        ;
+
+        
+    
+    
+            var marker_760d6184e0d7a64a752d19dd6119d878 = L.marker(
+                [-35.349304, 149.244385],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_715b9aa7489cc32f377f0047a90aa679 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4ed34614a5d68e76407375d1c314923e = $(`<div id="html_4ed34614a5d68e76407375d1c314923e" style="width: 100.0%; height: 100.0%;">Place: Australasia & Oceania<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 1<br>End Attack Count: 12<br>Percentage Change: 1100.0%</div>`)[0];
+                popup_715b9aa7489cc32f377f0047a90aa679.setContent(html_4ed34614a5d68e76407375d1c314923e);
+            
+        
+
+        marker_760d6184e0d7a64a752d19dd6119d878.bindPopup(popup_715b9aa7489cc32f377f0047a90aa679)
+        ;
+
+        
+    
+    
+            var marker_79453a95cc126aa2a82bf044c38ac6ef = L.marker(
+                [41.842602, -87.681229],
+                {
+}
+            ).addTo(map_4c210ff9be5feb1f4082fe046ea49a2b);
+        
+    
+        var popup_ce7c5bbb96741b31b7053aee2302d3d1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_145bdbd23a2b30fe4f0548b7a4381db7 = $(`<div id="html_145bdbd23a2b30fe4f0548b7a4381db7" style="width: 100.0%; height: 100.0%;">Place: North America<br>Start Year: 1970<br>End Year: 2017<br>Start Attack Count: 472<br>End Attack Count: 97<br>Percentage Change: -79.44915254237289%</div>`)[0];
+                popup_ce7c5bbb96741b31b7053aee2302d3d1.setContent(html_145bdbd23a2b30fe4f0548b7a4381db7);
+            
+        
+
+        marker_79453a95cc126aa2a82bf044c38ac6ef.bindPopup(popup_ce7c5bbb96741b31b7053aee2302d3d1)
+        ;
+
+        
+    
+</script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map</title>
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <h1>Interactive Map with Data</h1>
+
+    <!-- Form for selecting query and filtering -->
+    <div class="form-container">
+        <form method="POST">
+            <div class="form-section">
+                <!-- Dropdown for selecting query -->
+                <label for="query_type">Select Query:</label>
+                <select name="query_type" id="query_type" onchange="this.form.submit()">
+                    <option value="average_casualties" {% if selected_query == "average_casualties" %}selected{% endif %}>
+                        Average Casualties
+                    </option>
+                    <option value="percentage_change_in_attacks" {% if selected_query == "percentage_change_in_attacks" %}selected{% endif %}>
+                        Percentage Change in Attacks
+                    </option>
+                    <option value="active_groups" {% if selected_query == "active_groups" %}selected{% endif %}>
+                        Active Groups
+                    </option>
+                    <option value="groups_with_same_target" {% if selected_query == "groups_with_same_target" %}selected{% endif %}>
+                        Groups with Same Target
+                    </option>
+                    <option value="groups_using_same_attack_strategies" {% if selected_query == "groups_using_same_attack_strategies" %}selected{% endif %}>
+                        Groups Using Same Attack Strategies
+                    </option>
+                    <option value="regions_with_high_intergroup_activity" {% if selected_query == "regions_with_high_intergroup_activity" %}selected{% endif %}>
+                        Regions with High Intergroup Activity
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <!-- Conditional input fields -->
+                {% if selected_query in ["average_casualties", "percentage_change_in_attacks"] %}
+                    <!-- Limit by number for the first two queries -->
+                    <label for="limit">Limit Results:</label>
+                    <input type="number" id="limit" name="limit" value="{{ limit }}" placeholder="Enter number of results"><br>
+                {% elif selected_query in ["active_groups", "groups_with_same_target", "regions_with_high_intergroup_activity"] %}
+                    <!-- Filter by region or country for specific queries -->
+                    <label for="region">Region:</label>
+                    <input type="text" id="region" name="region" value="{{ region }}" placeholder="Enter Region"><br>
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" value="{{ country }}" placeholder="Enter Country"><br>
+                {% elif selected_query == "groups_using_same_attack_strategies" %}
+                    <!-- Filter by region for groups using same attack strategies -->
+                    <label for="region">Region:</label>
+                    <input type="text" id="region" name="region" value="{{ region }}" placeholder="Enter Region"><br>
+                {% endif %}
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit">Update Map</button>
+        </form>
+    </div>
+
+    <!-- Embed the generated map -->
+    <iframe src="{{ url_for('static', filename='map.html') }}" width="100%" height="600"></iframe>
+
+</body>
+</html>
