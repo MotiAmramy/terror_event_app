@@ -1,9 +1,7 @@
-from flask import Flask, render_template, request
-import folium
 import os
+import folium
 import requests
 
-app = Flask(__name__)
 
 # Utility function to save the map
 def save_map(map):
@@ -32,7 +30,8 @@ def get_groups_with_same_target_generate_map(region=None, country=None):
             folium.Marker(
                 location=[latitude, longitude],
                 popup=f"Groups: {', '.join(group['groups'])}<br>Target: {group['target']}<br>country: {group['country']}<br>region: {group['region']}",
-            ).add_to(map)
+            ).add_to(map),
+
 
     # Save the map to an HTML file
     save_map(map)
@@ -145,27 +144,3 @@ def get_active_groups_generate_map(region=None, limit=None):
                 ),
             ).add_to(map)
     save_map(map)
-
-@app.route("/", methods=["GET", "POST"])
-def home():
-    selected_query = request.form.get("query_type", "average_casualties")
-    region = request.form.get("region", "")
-    country = request.form.get("country", "")
-    limit = request.form.get("limit", None)
-
-    if selected_query == "average_casualties":
-        get_average_casualties_data_generate_map(limit=limit)
-    elif selected_query == "percentage_change_in_attacks":
-        get_percentage_change_in_attacks_generate_map(limit=limit)
-    elif selected_query == "active_groups":
-        get_active_groups_generate_map(region=region, limit=limit)
-    elif selected_query == "groups_with_same_target":
-        get_groups_with_same_target_generate_map(region=region, country=country)
-    elif selected_query == "groups_using_same_attack_strategies":
-        get_groups_using_same_attack_strategies_generate_map(region=region)
-    elif selected_query == "regions_with_high_intergroup_activity":
-        get_regions_with_high_intergroup_activity_generate_map(region=region, country=country)
-
-    return render_template("index.html", selected_query=selected_query, region=region, country=country, limit=limit)
-if __name__ == "__main__":
-    app.run(debug=True, port=5001)
