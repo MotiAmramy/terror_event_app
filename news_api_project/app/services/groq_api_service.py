@@ -28,6 +28,8 @@ def get_valid_news_using_groq(article):
 
 
 
+
+
 def get_news_with_location(data):
     filtered_list = t.pipe(
         data,
