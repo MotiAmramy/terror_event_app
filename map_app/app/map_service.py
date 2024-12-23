@@ -22,7 +22,7 @@ def get_groups_with_same_target_generate_map(region=None, country=None):
     # Create a base map centered at (20, 0) with zoom level 2
     map = folium.Map(location=[20, 0], zoom_start=2)
 
-    # Iterate over the data and add markers for each group with coordinates
+    # Iterate over the api and add markers for each group with coordinates
     for group in query_data:
         latitude = group.get('latitude')  # Use latitude
         longitude = group.get('longitude')  # Use longitude
@@ -67,7 +67,6 @@ def get_regions_with_high_intergroup_activity_generate_map(region=None, country=
         query_data = response.json()
     else:
         query_data = []
-
     map = folium.Map(location=[20, 0], zoom_start=2)
     for region_data in query_data:
         if region_data.get('latitude') and region_data.get('longitude'):
@@ -77,7 +76,7 @@ def get_regions_with_high_intergroup_activity_generate_map(region=None, country=
             ).add_to(map)
     save_map(map)
 
-# Function to fetch data and generate the map
+# Function to fetch api and generate the map
 def get_average_casualties_data_generate_map(limit=None):
     url = "http://127.0.0.1:5000/api/average_casualties_per_region"
     response = requests.get(url)
@@ -87,15 +86,12 @@ def get_average_casualties_data_generate_map(limit=None):
             query_data = query_data[:int(limit)]
     else:
         query_data = []
-
-    map = folium.Map(location=[20, 0], zoom_start=2)
-    for place in query_data:
-        if place.get('lat') and place.get('lon'):
-            folium.Marker(
+    visual_map = folium.Map(location=[20, 0], zoom_start=2)
+    list(map(lambda place: folium.Marker(
                 location=[place['lat'], place['lon']],
                 popup=f"Region: {place['_id']}<br>Average Casualties: {place['avg_casualties']}",
-            ).add_to(map)
-    save_map(map)
+            ).add_to(visual_map), query_data))
+    save_map(visual_map)
 
 def get_percentage_change_in_attacks_generate_map(limit=None):
     url = "http://127.0.0.1:5000/api/percentage_change_in_attacks"

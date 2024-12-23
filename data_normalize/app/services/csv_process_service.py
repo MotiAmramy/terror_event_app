@@ -4,10 +4,11 @@ import os
 import pandas as pd
 
 def get_terror_event_csv_1_path() -> str:
-    return os.path.join(os.path.dirname(__file__), '../../', 'csv_files', 'terror1_full.csv')
+    return os.path.join(os.path.dirname(__file__), '../../../csv_files', 'terror1_full.csv')
 
 def get_terror_event_csv_2_path() -> str:
-    return os.path.join(os.path.dirname(__file__), '../../', 'csv_files', 'terror2_full.csv')
+    return os.path.join(os.path.dirname(__file__), '../../../csv_files', 'terror2_full.csv')
+
 
 def load_csv_files(csv_1_path, csv_2_path):
     df1 = pd.read_csv(csv_1_path, encoding='iso-8859-1', low_memory=False)

@@ -46,13 +46,13 @@
                     <!-- Limit by number for the first two queries -->
                     <label for="limit">Limit Results:</label>
                     <input type="number" id="limit" name="limit" value="{{ limit }}" placeholder="Enter number of results"><br>
-                {% elif selected_query in ["active_groups", "groups_with_same_target", "regions_with_high_intergroup_activity"] %}
+                {% elif selected_query in ["groups_with_same_target", "regions_with_high_intergroup_activity"] %}
                     <!-- Filter by region or country for specific queries -->
                     <label for="region">Region:</label>
                     <input type="text" id="region" name="region" value="{{ region }}" placeholder="Enter Region"><br>
                     <label for="country">Country:</label>
                     <input type="text" id="country" name="country" value="{{ country }}" placeholder="Enter Country"><br>
-                {% elif selected_query == "groups_using_same_attack_strategies" %}
+                {% elif selected_query in ["groups_using_same_attack_strategies", "active_groups"] %}
                     <!-- Filter by region for groups using same attack strategies -->
                     <label for="region">Region:</label>
                     <input type="text" id="region" name="region" value="{{ region }}" placeholder="Enter Region"><br>
