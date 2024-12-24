@@ -17,14 +17,13 @@ def process_df_and_insert_to_mongo(chunks_size=1000):
 
 def if_none(val):
     if isinstance(val, pd.Series):
-        # If the value is a Series, take the first element (this is usually safe)
         val = val.iloc[0] if not val.empty else None
     return None if pd.isna(val) else val
 
 def row_to_terror_event(row) -> TerrorEvent:
     location = Location(
         country=if_none(row.get('country')),
-        region=if_none(row.get('region')),  # Using get to avoid KeyError
+        region=if_none(row.get('region')),
         city=if_none(row.get('city')),
         latitude=if_none(row.get('latitude')),
         longitude=if_none(row.get('longitude'))

@@ -105,6 +105,12 @@ def groups_using_same_attack_strategies_endpoint():
         return jsonify({"error": str(e)}), 500
 
 
+
+
+
+
+
+
 @terror_attack_blueprint.route('/regions_with_high_intergroup_activity', methods=['GET'])
 def regions_with_high_intergroup_activity_endpoint():
     try:

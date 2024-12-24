@@ -1,7 +1,6 @@
-
-
 import os
 import pandas as pd
+
 
 def get_terror_event_csv_1_path() -> str:
     return os.path.join(os.path.dirname(__file__), '../../../csv_files', 'terror1_full.csv')
@@ -15,7 +14,7 @@ def load_csv_files(csv_1_path, csv_2_path):
     df2 = pd.read_csv(csv_2_path, encoding='iso-8859-1', low_memory=False)
     return df1, df2
 
-# Helper Functions
+
 def convert_to_datetime(row):
     try:
         day = row['iday'] if pd.notna(row['iday']) and row['iday'] != 0 else 1
@@ -24,7 +23,7 @@ def convert_to_datetime(row):
     except ValueError:
         return None
 
-# Operations for df1
+
 def preprocess_df1(df1):
     df1.columns = df1.columns.str.strip().str.lower()
     df1.drop(['country'], axis=1, inplace=True)
@@ -57,7 +56,6 @@ def preprocess_df2(df2):
     df2['date'] = pd.to_datetime(df2['date'], format='%d-%b-%y', errors='coerce')
     df2['perpetrator'] = df2['perpetrator'].replace(['Other','Unknown'], None)
 
-    # Rename columns
     df2.rename(columns={
         'weapon': 'attack_type',
         'description': 'description',
@@ -68,15 +66,15 @@ def preprocess_df2(df2):
                 'perpetrator2','attack_type2', 'num_of_attackers', 'casualties']:
         if col not in df2.columns:
             df2[col] = None
-
     return df2
 
-# Data Merging
+
+
 def merge_datasets(df1, df2):
     merged_df = pd.concat([df1, df2], ignore_index=True)
     return merged_df
 
-# Data Selection
+
 def select_columns(merged_df):
     columns_to_keep = [
         'date', "country", "city", "latitude", "longitude", "region",
@@ -85,25 +83,24 @@ def select_columns(merged_df):
     ]
     return merged_df[columns_to_keep]
 
-# Main Processing Function
-def process_and_merge():
-    csv_1_path = get_terror_event_csv_1_path()
-    csv_2_path = get_terror_event_csv_2_path()
-    output_path = "merged_output.csv"
-    df1, df2 = load_csv_files(csv_1_path, csv_2_path)
-    df1 = preprocess_df1(df1)
-    df2 = preprocess_df2(df2)
-    merged_df = merge_datasets(df1, df2)
-    final_df = select_columns(merged_df)
-    save_to_csv(final_df, output_path)
-    return final_df
 
 
-def save_to_csv(df, output_path):
+
+def save_to_csv(df):
     try:
+        output_path = "../../../merged_output.csv"
         df.to_csv(output_path, index=False, encoding='iso-8859-1')
         print(f"DataFrame successfully saved to {output_path}")
     except Exception as e:
         print(f"An error occurred while saving to CSV: {e}")
 
-
+def process_and_merge():
+    csv_1_path = get_terror_event_csv_1_path()
+    csv_2_path = get_terror_event_csv_2_path()
+    df1, df2 = load_csv_files(csv_1_path, csv_2_path)
+    df1 = preprocess_df1(df1)
+    df2 = preprocess_df2(df2)
+    merged_df = merge_datasets(df1, df2)
+    final_df = select_columns(merged_df)
+    save_to_csv(final_df)
+    return final_df
