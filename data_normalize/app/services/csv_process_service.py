@@ -1,18 +1,6 @@
-import os
 import pandas as pd
-
-
-def get_terror_event_csv_1_path() -> str:
-    return os.path.join(os.path.dirname(__file__), '../../../csv_files', 'terror1_full.csv')
-
-def get_terror_event_csv_2_path() -> str:
-    return os.path.join(os.path.dirname(__file__), '../../../csv_files', 'terror2_full.csv')
-
-
-def load_csv_files(csv_1_path, csv_2_path):
-    df1 = pd.read_csv(csv_1_path, encoding='iso-8859-1', low_memory=False)
-    df2 = pd.read_csv(csv_2_path, encoding='iso-8859-1', low_memory=False)
-    return df1, df2
+from data_normalize.app.utils.csv_utils import get_terror_event_csv_1_path, get_terror_event_csv_2_path, save_to_csv
+from data_normalize.app.utils.pandas_utils import load_csv_files
 
 
 def convert_to_datetime(row):
@@ -48,8 +36,10 @@ def preprocess_df1(df1):
     df1['perpetrator'] = df1['perpetrator'].replace(['Other', 'Unknown'], None)
     df1['attack_type'] = df1['attack_type'].replace(['Other', 'Unknown'], None)
     df1['num_of_attackers'] = df1['num_of_attackers'].replace([-99.0], None)
-
     return df1
+
+
+
 
 def preprocess_df2(df2):
     df2.columns = df2.columns.str.strip().str.lower()
@@ -84,15 +74,6 @@ def select_columns(merged_df):
     return merged_df[columns_to_keep]
 
 
-
-
-def save_to_csv(df):
-    try:
-        output_path = "../../csv_files/merged_output.csv"
-        df.to_csv(output_path, index=False, encoding='iso-8859-1')
-        print(f"DataFrame successfully saved to {output_path}")
-    except Exception as e:
-        print(f"An error occurred while saving to CSV: {e}")
 
 def process_and_merge():
     csv_1_path = get_terror_event_csv_1_path()

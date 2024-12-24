@@ -1,7 +1,8 @@
 
 from data_normalize.app.db.models.mongo_event import TerrorEvent, Location
 from data_normalize.app.db.repository.mongo_repository import insert_many_event
-from data_normalize.app.utils.pandas_utils import insert_to_db_chunks, if_none
+from data_normalize.app.services.elastic_service import insert_to_db_chunks
+from data_normalize.app.utils.pandas_utils import  if_none
 
 
 
