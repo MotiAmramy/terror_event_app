@@ -309,34 +309,48 @@ def groups_with_common_targets_by_year(region=None, country=None):
 
 
 def groups_using_same_attack_strategies(region=None):
+    # Filter by region if provided
     match_stage = {}
     if region:
         match_stage["location.region"] = region
 
     pipeline = [
+        {"$match": match_stage},  # Apply region filter here if present
         {"$unwind": "$attack_types"},
         {"$unwind": "$group_types"},
         {"$group": {
             "_id": {"region": "$location.region", "attack_type": "$attack_types"},
-            "groups": {"$addToSet": "$group_types"},
-            "lat": {"$first": "$location.latitude"},  # Get the first latitude for the region
-            "lon": {"$first": "$location.longitude"}  # Get the first longitude for the region
+            "groups": {"$addToSet": "$group_types"},  # Collect unique group types
+            "lat": {"$first": "$location.latitude"},
+            "lon": {"$first": "$location.longitude"}
         }},
-        {"$match": {"$expr": {"$gt": [{"$size": "$groups"}, 1]}}},  # More than one group
-        {"$match": {"_id.region": {"$ne": None}}},  # Exclude None regions
+        {"$match": {"$expr": {"$gt": [{"$size": "$groups"}, 1]}}},  # Keep groups with more than 1 group
         {"$project": {
             "region": "$_id.region",
             "attack_type": "$_id.attack_type",
-            "groups": 1,
-            "lat": 1,  # Include latitude in the output
-            "lon": 1  # Include longitude in the output
+            "groups_count": {"$size": "$groups"},  # Count the number of unique groups
+            "lat": 1,
+            "lon": 1
         }},
-        {"$sort": {"region": 1}}  # Sort by region
+        {"$sort": {"region": 1, "groups_count": -1}},  # Sort by region and then by the group count in descending order
+        {"$group": {
+            "_id": "$region",  # Group by region
+            "attack_type": {"$first": "$attack_type"},  # Get the attack_type of the highest group count
+            "groups_count": {"$first": "$groups_count"},  # Get the count of groups
+            "lat": {"$first": "$lat"},
+            "lon": {"$first": "$lon"}
+        }},
+        {"$project": {
+            "region": "$_id",
+            "attack_type": 1,
+            "groups_count": 1,
+            "lat": 1,
+            "lon": 1
+        }}
     ]
 
     result = list(events_collection.aggregate(pipeline))
     return result
-
 
 def unique_groups_by_country_or_region(country=None, region=None):
     match_stage = {}

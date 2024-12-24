@@ -35,16 +35,16 @@
                         Regions with High Intergroup Activity
                     </option>
                     <option value="search_keywords" {% if selected_query == "search_keywords" %}selected{% endif %}>
-                        Search Keywords
+                        Search By Keywords
                     </option>
                     <option value="search_news" {% if selected_query == "search_news" %}selected{% endif %}>
                         Search News
                     </option>
                     <option value="search_historic" {% if selected_query == "search_historic" %}selected{% endif %}>
-                        Search Historic
+                        Search Historic News
                     </option>
-                    <option value="search_combined" {% if selected_query == "search_combined" %}selected{% endif %}>
-                        Search Combined
+                    <option value="search_by_date" {% if selected_query == "search_by_date" %}selected{% endif %}>
+                        Search By Date
                     </option>
                 </select>
             </div>
@@ -63,7 +63,11 @@
                 {% elif selected_query in ["search_keywords", "search_news", "search_historic"] %}
                     <label for="keyword">Keyword:</label>
                     <input type="text" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Enter Keyword"><br>
-                {% elif selected_query == "search_combined" %}
+                    <label for="limit">Limit Results:</label>
+                    <input type="number" id="limit" name="limit" value="{{ limit }}" placeholder="Enter number of results"><br>
+                {% elif selected_query == "search_by_date" %}
+                    <label for="limit">Limit Results:</label>
+                    <input type="number" id="limit" name="limit" value="{{ limit }}" placeholder="Enter number of results"><br>
                     <label for="keyword">Keyword:</label>
                     <input type="text" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Enter Keyword"><br>
                     <label for="start_date">Start Date:</label>

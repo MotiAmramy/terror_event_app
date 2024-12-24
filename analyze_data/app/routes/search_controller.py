@@ -12,9 +12,6 @@ def search_keyword():
         keyword = request.args.get("keyword")
         query = build_search_query(keyword)
         results = execute_search(query=query)
-        limit = request.args.get('top_5', type=bool, default=False)
-        if limit:
-            results = results[:5]
         return jsonify({"count": len(results), "results": results}), 200
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {e}"}), 500
@@ -27,9 +24,6 @@ def search_keyword_in_news():
         keyword = request.args.get("keyword")
         query = search_by_category_and_keyword(category="nowadays terror attack", keyword=keyword)
         results = execute_search(query=query)
-        limit = request.args.get('top_5', type=bool, default=False)
-        if limit:
-            results = results[:5]
         return jsonify({"count": len(results), "results": results}), 200
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {e}"}), 500
@@ -42,9 +36,6 @@ def search_keyword_in_historic_news():
         keyword = request.args.get("keyword")
         query = search_by_category_and_keyword(category="historical terror attack", keyword=keyword)
         results = execute_search(query=query)
-        limit = request.args.get('top_5', type=bool, default=False)
-        if limit:
-            results = results[:5]
         return jsonify({"count": len(results), "results": results}), 200
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {e}"}), 500
@@ -61,9 +52,6 @@ def search_keyword_combined():
         end_date = request.args.get("end_date")
         query = search_by_keyword_and_date_range(start_date, end_date, keyword)
         results = execute_search(query=query)
-        limit = request.args.get('top_5', type=bool, default=False)
-        if limit:
-            result = results[:5]
-        return jsonify({"count": len(result), "results": results}), 200
+        return jsonify({"count": len(results), "results": results}), 200
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {e}"}), 500

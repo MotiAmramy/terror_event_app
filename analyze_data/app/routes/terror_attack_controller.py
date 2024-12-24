@@ -19,9 +19,6 @@ def most_deadly_terror_attacks():
 def average_casualties_endpoint():
     try:
         result = average_casualties_per_region_mongo()
-        limit = request.args.get('top_5', type=bool, default=False)
-        if limit:
-            result = result[:5]
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -38,10 +35,7 @@ def top_5_groups_endpoint():
 def percentage_change_in_attacks():
     try:
         result = calculate_percentage_change_mongo()
-        limit = request.args.get('top_5', type=bool, default=False)
-        if limit:
-            result = sorted(result, key=lambda x: x['percentage_change_in_attack_count'], reverse=True)[:5]
-
+        result = sorted(result, key=lambda x: x['percentage_change_in_attack_count'], reverse=True)
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -50,12 +44,7 @@ def percentage_change_in_attacks():
 def active_groups():
     try:
         region = request.args.get('region', default=None)
-        limit = request.args.get('limit', default=None)
         result = process_active_groups_mongo(region=region)
-
-        if limit:
-            result = result[:limit]
-
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -100,10 +89,10 @@ def groups_using_same_attack_strategies_endpoint():
     try:
         region = request.args.get('region', default=None)
         result = groups_using_same_attack_strategies(region=region)
+
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @terror_attack_blueprint.route('/regions_with_high_intergroup_activity', methods=['GET'])
 def regions_with_high_intergroup_activity_endpoint():

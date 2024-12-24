@@ -28,12 +28,12 @@ def home():
     elif selected_query == "regions_with_high_intergroup_activity":
         get_regions_with_high_intergroup_activity_generate_map(region=region, country=country)
     elif selected_query == "search_keywords":
-        generate_map_from_keywords(keyword)
+        generate_map_from_keywords(keyword, limit)
     elif selected_query == "search_news":
-        generate_map_from_news(keyword)
+        generate_map_from_news(keyword, limit)
     elif selected_query == "search_historic":
-        generate_map_from_historic(keyword)
-    elif selected_query == "search_combined":
-        generate_map_from_combined(keyword, start_date, end_date)
+        generate_map_from_historic(keyword, limit)
+    elif selected_query == "search_by_date":
+        generate_map_from_combined(limit, keyword, start_date, end_date)
 
     return render_template("index.html", selected_query=selected_query, region=region, country=country, limit=limit)
