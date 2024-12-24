@@ -190,7 +190,6 @@ def process_active_groups_mongo(region=None):
         }
     })
 
-    # Final aggregation to return the region, most active group, and coordinates
     pipeline.extend([
         {
             "$project": {
@@ -341,31 +340,27 @@ def groups_using_same_attack_strategies(region=None):
 
 def unique_groups_by_country_or_region(country=None, region=None):
     match_stage = {}
-
-    # Filter by country or region
     if country:
         match_stage["location.country"] = country
     elif region:
         match_stage["location.region"] = region
 
-    # MongoDB aggregation pipeline
     pipeline = [
-        {"$match": match_stage},  # Apply the country or region filter
-        {"$unwind": "$group_types"},  # Unwind group_types to count unique groups
+        {"$match": match_stage},
+        {"$unwind": "$group_types"},
         {"$group": {
-            "_id": "$location.country" if country else "$location.region",  # Group by country or region
-            "unique_groups_count": {"$addToSet": "$group_types"},  # Collect unique groups
-            "average_lat": {"$avg": "$location.latitude"},  # Get the average latitude
-            "average_lon": {"$avg": "$location.longitude"}  # Get the average longitude
+            "_id": "$location.country" if country else "$location.region",
+            "unique_groups_count": {"$addToSet": "$group_types"},
+            "average_lat": {"$avg": "$location.latitude"},
+            "average_lon": {"$avg": "$location.longitude"}
         }},
         {"$project": {
             "_id": 0,
             "country_or_region": {"$ifNull": ["$_id", ""]},
-            "unique_group_count": {"$size": "$unique_groups_count"},  # Count unique groups
-            "latitude": "$average_lat",  # Include the average latitude
-            "longitude": "$average_lon"  # Include the average longitude
+            "unique_group_count": {"$size": "$unique_groups_count"},
+            "latitude": "$average_lat",
+            "longitude": "$average_lon"
         }}
     ]
 
-    # Return the aggregated result
     return list(events_collection.aggregate(pipeline))

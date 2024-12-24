@@ -1,32 +1,34 @@
 from analyze_data.app.db.es_database import connect_elasticsearch
 
 
-
-
-def build_search_query(keyword):
-    return {
+def build_search_query(keyword=None):
+    query = {
         "query": {
-            "query_string": {
-                "query": keyword,
-                "default_field": "*"
-            }
+            "match_all": {}
         }
     }
+    if keyword:
+        query = {
+            "query": {
+                "query_string": {
+                    "query": keyword,
+                    "default_field": "*"
+                }
+            }
+        }
+    return query
 
 
-def search_by_category_and_keyword(category, keyword):
-    return {
+
+def search_by_category_and_keyword(category, keyword=None):
+    # Base query for category
+    query = {
         "query": {
             "bool": {
                 "must": [
                     {
                         "term": {
-                            "category.keyword": category  # Search within the specified category
-                        }
-                    },
-                    {
-                        "match": {
-                            "content": keyword  # Search for the keyword in the 'content' field (or any other field)
+                            "category.keyword": category
                         }
                     }
                 ]
@@ -34,37 +36,43 @@ def search_by_category_and_keyword(category, keyword):
         }
     }
 
+    if keyword:
+        query['query']['bool']['must'].append({
+            "match": {
+                "content": keyword
+            }
+        })
+
+    return query
 
 
-
-
-
-def search_by_keyword_and_date_range(start_date, end_date, keyword):
-    return {
+def search_by_keyword_and_date_range(start_date=None, end_date=None, keyword=None):
+    query = {
         "query": {
             "bool": {
-                "must": [
-                    {
-                        "match": {
-                            "content": keyword
-                        }
-                    }
-                ],
-                "filter": [
-                    {
-                        "range": {
-                            "date": {
-                                "gte": start_date,
-                                "lte": end_date
-                            }
-                        }
-                    }
-                ]
+                "must": [],
+                "filter": []
             }
         }
     }
+    if keyword:
+        query["query"]["bool"]["must"].append({
+            "match": {
+                "content": keyword
+            }
+        })
 
+    if start_date and end_date:
+        query["query"]["bool"]["filter"].append({
+            "range": {
+                "date": {
+                    "gte": start_date,
+                    "lte": end_date
+                }
+            }
+        })
 
+    return query
 
 def execute_search(query):
     try:

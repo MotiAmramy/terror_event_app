@@ -23,7 +23,6 @@ def get_valid_news_using_groq(article):
                 "longitude": location_dict["country_longitude"]
             }
     except Exception as e:
-        print(str(e))
         return None
 
 

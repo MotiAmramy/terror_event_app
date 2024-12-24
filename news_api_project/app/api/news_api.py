@@ -1,7 +1,7 @@
 import requests
 
 
-def fetch_articles(api_key, keyword, articles_page=1, articles_count=100):
+def fetch_articles(api_key, keyword, articles_page=1, articles_count=10):
     try:
         url = "https://eventregistry.org/api/v1/article/getArticles"
         payload = {

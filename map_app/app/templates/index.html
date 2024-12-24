@@ -34,6 +34,18 @@
                     <option value="regions_with_high_intergroup_activity" {% if selected_query == "regions_with_high_intergroup_activity" %}selected{% endif %}>
                         Regions with High Intergroup Activity
                     </option>
+                    <option value="search_keywords" {% if selected_query == "search_keywords" %}selected{% endif %}>
+                        Search Keywords
+                    </option>
+                    <option value="search_news" {% if selected_query == "search_news" %}selected{% endif %}>
+                        Search News
+                    </option>
+                    <option value="search_historic" {% if selected_query == "search_historic" %}selected{% endif %}>
+                        Search Historic
+                    </option>
+                    <option value="search_combined" {% if selected_query == "search_combined" %}selected{% endif %}>
+                        Search Combined
+                    </option>
                 </select>
             </div>
 
@@ -48,9 +60,18 @@
                 {% elif selected_query in ["groups_using_same_attack_strategies", "active_groups"] %}
                     <label for="region">Region:</label>
                     <input type="text" id="region" name="region" value="{{ region }}" placeholder="Enter Region"><br>
+                {% elif selected_query in ["search_keywords", "search_news", "search_historic"] %}
+                    <label for="keyword">Keyword:</label>
+                    <input type="text" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Enter Keyword"><br>
+                {% elif selected_query == "search_combined" %}
+                    <label for="keyword">Keyword:</label>
+                    <input type="text" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Enter Keyword"><br>
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ start_date }}"><br>
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ end_date }}"><br>
                 {% endif %}
             </div>
-
             <button type="submit">Update Map</button>
         </form>
     </div>
