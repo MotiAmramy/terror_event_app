@@ -19,4 +19,3 @@ if __name__ == '__main__':
      process_df_and_insert_to_elastic(merged_df)
      consume_topic(os.environ['NEWS_TOPIC'], process_message_and_insert_to_es)
      app.run(port=5002, debug=True)
-#
