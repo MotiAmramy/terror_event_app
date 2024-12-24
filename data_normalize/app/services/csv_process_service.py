@@ -1,5 +1,6 @@
 import pandas as pd
-from data_normalize.app.utils.csv_utils import get_terror_event_csv_1_path, get_terror_event_csv_2_path, save_to_csv
+from data_normalize.app.utils.csv_utils import get_terror_event_csv_1_path, get_terror_event_csv_2_path, save_to_csv, \
+    columns_to_keep, columns_to_rename_df1
 from data_normalize.app.utils.pandas_utils import load_csv_files
 
 
@@ -17,20 +18,7 @@ def preprocess_df1(df1):
     df1.drop(['country'], axis=1, inplace=True)
     df1.drop(['region'], axis=1, inplace=True)
 
-    df1.rename(columns={
-        'region_txt': 'region',
-        'nkill': 'fatalities',
-        'nwound': 'injuries',
-        'summary': 'description',
-        'country_txt': 'country',
-        'gname': 'perpetrator',
-        'gname2': 'perpetrator2',
-        'attacktype1_txt': 'attack_type',
-        'attacktype2_txt': 'attack_type2',
-        'targtype1_txt': 'target_type',
-        'targtype2_txt': 'target_type2',
-        'nperps': 'num_of_attackers'
-    }, inplace=True)
+    df1.rename(columns=columns_to_rename_df1, inplace=True)
     df1['casualties'] = df1['fatalities'] + df1['injuries']
     df1['date'] = df1.apply(lambda row: convert_to_datetime(row), axis=1)
     df1['perpetrator'] = df1['perpetrator'].replace(['Other', 'Unknown'], None)
@@ -66,12 +54,8 @@ def merge_datasets(df1, df2):
 
 
 def select_columns(merged_df):
-    columns_to_keep = [
-        'date', "country", "city", "latitude", "longitude", "region",
-        "target_type", 'target_type2', "attack_type", 'attack_type2', "perpetrator2", "perpetrator",
-        "num_of_attackers", "injuries", "fatalities", "casualties", 'description', 'region'
-    ]
-    return merged_df[columns_to_keep]
+    columns = columns_to_keep
+    return merged_df[columns]
 
 
 

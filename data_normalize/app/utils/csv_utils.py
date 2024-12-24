@@ -19,3 +19,32 @@ def save_to_csv(df):
         print(f"DataFrame successfully saved to {output_path}")
     except Exception as e:
         print(f"An error occurred while saving to CSV: {e}")
+
+
+
+
+
+
+
+columns_to_keep = [
+        'date', "country", "city", "latitude", "longitude", "region",
+        "target_type", 'target_type2', "attack_type", 'attack_type2', "perpetrator2", "perpetrator",
+        "num_of_attackers", "injuries", "fatalities", "casualties", 'description', 'region'
+    ]
+
+
+
+columns_to_rename_df1 = {
+        'region_txt': 'region',
+        'nkill': 'fatalities',
+        'nwound': 'injuries',
+        'summary': 'description',
+        'country_txt': 'country',
+        'gname': 'perpetrator',
+        'gname2': 'perpetrator2',
+        'attacktype1_txt': 'attack_type',
+        'attacktype2_txt': 'attack_type2',
+        'targtype1_txt': 'target_type',
+        'targtype2_txt': 'target_type2',
+        'nperps': 'num_of_attackers'
+    }
