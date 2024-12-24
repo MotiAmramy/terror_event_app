@@ -21,7 +21,6 @@ def build_search_query(keyword=None):
 
 
 def search_by_category_and_keyword(category, keyword=None):
-    # Base query for category
     query = {
         "query": {
             "bool": {
@@ -74,8 +73,12 @@ def search_by_keyword_and_date_range(start_date=None, end_date=None, keyword=Non
 
     return query
 
-def execute_search(query):
+
+
+
+def execute_search(query, size=1000):
     try:
+        query["size"] = size
         with connect_elasticsearch() as es_client:
             response = es_client.search(index="news", body=query)
             return [doc["_source"] for doc in response["hits"]["hits"]]

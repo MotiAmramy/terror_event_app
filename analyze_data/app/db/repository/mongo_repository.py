@@ -51,20 +51,20 @@ def average_casualties_per_region_mongo():
         },
         {
             "$group": {
-                "_id": "$location.region",  # Group by region
-                "avg_casualties": {"$avg": "$attack_score"},  # Average attack score
-                "lat": {"$first": "$location.latitude"},  # Get latitude of first document
-                "lon": {"$first": "$location.longitude"}  # Get longitude of first document
+                "_id": "$location.region",
+                "avg_casualties": {"$avg": "$attack_score"},
+                "lat": {"$first": "$location.latitude"},
+                "lon": {"$first": "$location.longitude"}
             }
         },
         {
             "$match": {
                 "lat": {"$ne": None},
-                "lon": {"$ne": None}  # Exclude records with null lat/lon
+                "lon": {"$ne": None}
             }
         },
         {
-            "$sort": {"avg_casualties": -1}  # Sort by average casualties in descending order
+            "$sort": {"avg_casualties": -1}
         }
     ]
     return list(events_collection.aggregate(pipeline))
@@ -88,19 +88,15 @@ def top_5_groups_with_most_casualties_mongo():
 def calculate_percentage_change_mongo():
     pipeline = [
         {"$addFields": {"year": {"$year": {"$toDate": "$date"}}}},
-
-        # Group by region and year to calculate attack count
         {
             "$group": {
                 "_id": {"region": "$location.region", "year": "$year"},
                 "attack_count": {"$sum": 1},
-                "lat": {"$first": "$location.latitude"},  # Get latitude of first document
-                "lon": {"$first": "$location.longitude"}  # Get longitude of first document
+                "lat": {"$first": "$location.latitude"},
+                "lon": {"$first": "$location.longitude"}
             }
         },
         {"$sort": {"_id.region": 1, "_id.year": 1}},
-
-        # Group by region to get first and last year attack counts
         {
             "$group": {
                 "_id": "$_id.region",
@@ -110,8 +106,6 @@ def calculate_percentage_change_mongo():
                     "$last": {"year": "$_id.year", "attack_count": "$attack_count", "lat": "$lat", "lon": "$lon"}}
             }
         },
-
-        # Calculate percentage change and add fields
         {
             "$project": {
                 "region": "$_id",
@@ -135,21 +129,17 @@ def calculate_percentage_change_mongo():
                         100
                     ]
                 },
-                "end_lat": "$last_year_data.lat",  # Get latitude for last year
-                "end_lon": "$last_year_data.lon"  # Get longitude for last year
+                "end_lat": "$last_year_data.lat",
+                "end_lon": "$last_year_data.lon"
             }
         },
-
-        # Filter out regions or lat/lon that are null
         {
             "$match": {
-                "region": {"$ne": None},  # Exclude null regions
-                "end_lat": {"$ne": None},  # Exclude null latitudes
-                "end_lon": {"$ne": None}  # Exclude null longitudes
+                "region": {"$ne": None},
+                "end_lat": {"$ne": None},
+                "end_lon": {"$ne": None}
             }
         },
-
-        # Match documents where end year exists
         {
             "$match": {
                 "end_year": {"$exists": True}
@@ -161,48 +151,40 @@ def calculate_percentage_change_mongo():
 
 def process_active_groups_mongo(region=None):
     pipeline = []
-
-    # If region is provided, filter by region
     if region:
         pipeline.append({"$match": {"location.region": region}})
-
-    # Unwind group types (to count events for each group)
     pipeline.extend([
         {"$unwind": "$group_types"},
         {
             "$group": {
-                "_id": "$location.region",  # Group by region
-                "most_active_group": {"$first": "$group_types"},  # Get the most active group type (first one)
-                "event_count": {"$sum": 1},  # Count events for each group in the region
-                "lat": {"$first": "$location.latitude"},  # Get the latitude of the region
-                "lon": {"$first": "$location.longitude"}  # Get the longitude of the region
+                "_id": "$location.region",
+                "most_active_group": {"$first": "$group_types"},
+                "event_count": {"$sum": 1},
+                "lat": {"$first": "$location.latitude"},
+                "lon": {"$first": "$location.longitude"}
             }
         },
-        {"$sort": {"event_count": -1}}  # Sort by event count in descending order
+        {"$sort": {"event_count": -1}}
     ])
 
-    # Match to exclude records with null lat, lon, or region values
     pipeline.append({
         "$match": {
             "lat": {"$ne": None},
             "lon": {"$ne": None},
-            "_id": {"$ne": None}  # Exclude regions with null values
+            "_id": {"$ne": None}
         }
     })
-
     pipeline.extend([
         {
             "$project": {
-                "region": "$_id",  # Include the region name
-                "most_active_group": 1,  # Include the most active group
-                "event_count": 1,  # Include the count of events for the group
-                "lat": 1,  # Include the latitude of the region
-                "lon": 1  # Include the longitude of the region
+                "region": "$_id",
+                "most_active_group": 1,
+                "event_count": 1,
+                "lat": 1,
+                "lon": 1
             }
         }
     ])
-
-    # Execute the aggregation and return the results
     return list(events_collection.aggregate(pipeline))
 
 def get_groups_involved_in_same_attack_mongo():
@@ -232,7 +214,6 @@ def groups_with_common_targets(region=None, country=None):
         match_stage["location.region"] = region
     if country:
         match_stage["location.country"] = country
-
     pipeline = [
         {"$match": match_stage},
         {"$unwind": "$group_types"},
@@ -266,7 +247,6 @@ def groups_with_common_targets(region=None, country=None):
             }
         }
     ]
-
     return list(events_collection.aggregate(pipeline))
 
 
@@ -281,7 +261,6 @@ def groups_with_common_targets_by_year(region=None, country=None):
         {"$match": match_stage},
         {"$unwind": "$group_types"},
         {"$unwind": "$target_types"},
-        # הוספת שלב להוספת שנה מתוך התאריך
         {"$addFields": {"year": {"$year": {"$toDate": "$date"}}}},
         {
             "$group": {
@@ -309,34 +288,33 @@ def groups_with_common_targets_by_year(region=None, country=None):
 
 
 def groups_using_same_attack_strategies(region=None):
-    # Filter by region if provided
     match_stage = {}
     if region:
         match_stage["location.region"] = region
 
     pipeline = [
-        {"$match": match_stage},  # Apply region filter here if present
+        {"$match": match_stage},
         {"$unwind": "$attack_types"},
         {"$unwind": "$group_types"},
         {"$group": {
             "_id": {"region": "$location.region", "attack_type": "$attack_types"},
-            "groups": {"$addToSet": "$group_types"},  # Collect unique group types
+            "groups": {"$addToSet": "$group_types"},
             "lat": {"$first": "$location.latitude"},
             "lon": {"$first": "$location.longitude"}
         }},
-        {"$match": {"$expr": {"$gt": [{"$size": "$groups"}, 1]}}},  # Keep groups with more than 1 group
+        {"$match": {"$expr": {"$gt": [{"$size": "$groups"}, 1]}}},
         {"$project": {
             "region": "$_id.region",
             "attack_type": "$_id.attack_type",
-            "groups_count": {"$size": "$groups"},  # Count the number of unique groups
+            "groups_count": {"$size": "$groups"},
             "lat": 1,
             "lon": 1
         }},
-        {"$sort": {"region": 1, "groups_count": -1}},  # Sort by region and then by the group count in descending order
+        {"$sort": {"region": 1, "groups_count": -1}},
         {"$group": {
-            "_id": "$region",  # Group by region
-            "attack_type": {"$first": "$attack_type"},  # Get the attack_type of the highest group count
-            "groups_count": {"$first": "$groups_count"},  # Get the count of groups
+            "_id": "$region",
+            "attack_type": {"$first": "$attack_type"},
+            "groups_count": {"$first": "$groups_count"},
             "lat": {"$first": "$lat"},
             "lon": {"$first": "$lon"}
         }},
@@ -376,5 +354,4 @@ def unique_groups_by_country_or_region(country=None, region=None):
             "longitude": "$average_lon"
         }}
     ]
-
     return list(events_collection.aggregate(pipeline))

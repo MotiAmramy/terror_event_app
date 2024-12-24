@@ -4,7 +4,6 @@ from news_api_project.app.utils.groq_utils import validate_groq_json
 
 
 
-
 def get_valid_news_using_groq(article):
     try:
         location_dict = t.pipe(
@@ -24,8 +23,6 @@ def get_valid_news_using_groq(article):
             }
     except Exception as e:
         return None
-
-
 
 
 

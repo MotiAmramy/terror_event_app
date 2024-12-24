@@ -17,4 +17,5 @@ def produce(data, key, topic):
         value=data,
         key=key.encode('utf-8')
     )
+    print("send successfully")
     producer.flush()

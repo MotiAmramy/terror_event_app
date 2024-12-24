@@ -1,5 +1,4 @@
-from data_normalize.app.utils.insert_to_db_utils import if_none
-
+from data_normalize.app.utils.pandas_utils import if_none
 
 def to_elasticsearch_doc_from_message(article):
     return {
@@ -15,8 +14,6 @@ def to_elasticsearch_doc_from_message(article):
         },
     }
 
-
-
 def to_elasticsearch_doc_from_df(article):
     return {
         "_index": "news",
@@ -30,5 +27,3 @@ def to_elasticsearch_doc_from_df(article):
             "longitude": if_none(article.get('longitude')),
         },
     }
-
-

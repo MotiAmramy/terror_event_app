@@ -88,7 +88,7 @@ def select_columns(merged_df):
 
 def save_to_csv(df):
     try:
-        output_path = "../../../merged_output.csv"
+        output_path = "../../csv_files/merged_output.csv"
         df.to_csv(output_path, index=False, encoding='iso-8859-1')
         print(f"DataFrame successfully saved to {output_path}")
     except Exception as e:

@@ -1,6 +1,7 @@
 import folium
 import requests
-from map_app.app.utils.map_utils import save_map
+from map_app.app.utils.map_utils import save_map, return_folium_settings_for_avg_casualties
+
 
 def fetch_data_from_api(url, params=None):
     response = requests.get(url, params=params)
@@ -19,6 +20,8 @@ def generate_map(data, popup_template):
                 popup=popup_template.format(**item),
             ).add_to(map)
     save_map(map)
+
+
 
 def get_groups_with_same_target_generate_map(region=None, country=None):
     url = "http://127.0.0.1:5000/api/groups_with_same_target"
@@ -47,7 +50,7 @@ def get_average_casualties_data_generate_map(limit=None):
     if limit:
         data = data[:int(limit)]
     popup_template = "Region: {_id}<br>Average Casualties: {avg_casualties}"
-    generate_map(data, popup_template)
+    return_folium_settings_for_avg_casualties(data, popup_template)
 
 def get_percentage_change_in_attacks_generate_map(limit=None):
     url = "http://127.0.0.1:5000/api/percentage_change_in_attacks"

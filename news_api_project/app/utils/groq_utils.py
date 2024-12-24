@@ -1,9 +1,5 @@
 
 
-
-
-
-
 def validate_groq_json(groq_json: dict):
         required_fields = ["country", "country_latitude", "country_longitude", "category", "continent"]
         valid = all(groq_json[field] not in [None, 0, ""] for field in required_fields)
