@@ -10,6 +10,10 @@ from data_normalize.app.services.mongo_service import process_df_and_insert_to_m
 
 
 load_dotenv(verbose=True)
+
+
+
+
 app = Flask(__name__)
 
 
