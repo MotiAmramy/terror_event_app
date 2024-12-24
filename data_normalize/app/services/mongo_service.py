@@ -1,24 +1,17 @@
-from typing import List, Callable
-import toolz as t
+
 from data_normalize.app.db.models.mongo_event import TerrorEvent, Location
 from data_normalize.app.db.repository.mongo_repository import insert_many_event
-from data_normalize.app.services.csv_process_service import process_and_merge
-import pandas as pd
+from data_normalize.app.utils.insert_to_db_utils import insert_to_db_chunks, if_none
 
 
-def insert_to_mongo_chunks(data: List, insert_func: Callable, chunks_size: int):
-    [insert_func(chunk) for chunk in list(t.partition_all(chunks_size, data))]
 
 
-def process_df_and_insert_to_mongo(chunks_size=1000):
-    merged_df = process_and_merge()
+
+def process_df_and_insert_to_mongo(merged_df, chunks_size=1000):
     data = [row_to_terror_event(row) for _, row in merged_df.iterrows()]
-    insert_to_mongo_chunks(data, insert_many_event, chunks_size)
+    insert_to_db_chunks(data, insert_many_event, chunks_size)
 
-def if_none(val):
-    if isinstance(val, pd.Series):
-        val = val.iloc[0] if not val.empty else None
-    return None if pd.isna(val) else val
+
 
 def row_to_terror_event(row) -> TerrorEvent:
     location = Location(

@@ -4,10 +4,9 @@ from elasticsearch import helpers
 from news_api_project.app.utils.es_utils import to_elasticsearch_doc
 
 
-def insert_review_elastic_search(news_list):
+def insert_chunks_elastic_search(es_documents):
     with connect_elasticsearch() as es_client:
         try:
-            es_documents = [to_elasticsearch_doc(document) for document in news_list]
             helpers.bulk(es_client, es_documents)
             print(f"Successfully inserted {len(es_documents)} news articles into Elasticsearch.")
 
